@@ -10,10 +10,11 @@ from base_element import BaseElement
 from base_page import BasePage
 from namedtuples.locator import Locator
 from namedtuples.job_post import JobPost
+from utils.auth import BROKER, BACKEND
 
 app = Celery('indeed_page',
-             broker=CELERY_BROKER,
-             backend=CELERY_BACKEND)
+             broker=BROKER,
+             backend=BACKEND)
 
 
 class IndeedPage(BasePage):

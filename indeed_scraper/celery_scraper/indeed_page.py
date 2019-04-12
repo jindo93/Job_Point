@@ -7,12 +7,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from namedtuples.locator import Locator
+from utils.auth import BROKER, BACKEND
 
 url = 'https://www.indeed.com'
 
 app = celery.Celery('indeed_page1.py',
-                    broker=CELERY_BROKER,
-                    backend=CELERY_BACKEND)
+                    broker=BROKER,
+                    backend=BACKEND)
 
 
 def go(driver):

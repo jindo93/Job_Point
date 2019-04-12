@@ -6,19 +6,8 @@ from selenium.webdriver.chrome.options import Options
 
 from schema import input_job_data
 from indeed_page import IndeedPage
+from utils.auth import NEO4J_USR, NEO4J_PW
 
-# def input_job_data(job_details):
-#     for job_detail in job_details:
-#         job = Node("Job", name=job_detail[0], post_url=job_detail[1])
-#         company = Node("Company", name=job_detail[2])
-#         location = Node("Location", name=job_detail[3])
-
-#         graph.merge(job, "Job", "post_url")
-#         graph.merge(company, "Company", "name")
-#         graph.merge(location, "Location", "name")
-#         HAS = Relationship.type("HAS")
-#         LOCATED = Relationship.type("LOCATED")
-#         graph.merge(HAS(company, job) | LOCATED(company, location))
 
 graph = Graph("bolt://localhost:7687", auth=(NEO4J_USR, NEO4J_PW))
 

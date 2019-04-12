@@ -7,7 +7,8 @@ import celery
 from celery import group
 
 from schema import input_job_data
-import indeed_page1 as ip
+import indeed_page as ip
+from utils.auth import NEO4J_USR, NEO4J_PW
 
 graph = Graph("bolt://localhost:7687", auth=(NEO4J_USR, NEO4J_PW))
 
