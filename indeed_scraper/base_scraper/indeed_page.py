@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from celery import Celery
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -8,13 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from base_element import BaseElement
 from base_page import BasePage
-from namedtuples.locator import Locator
-from namedtuples.job_post import JobPost
-from utils.auth import BROKER, BACKEND
-
-app = Celery('indeed_page',
-             broker=BROKER,
-             backend=BACKEND)
+from locator import Locator
 
 
 class IndeedPage(BasePage):
@@ -23,6 +16,16 @@ class IndeedPage(BasePage):
     @property
     def search_input(self):
         locator = Locator(by=By.ID, value='text-input-what')
+        element = BaseElement(
+            driver=self.driver,
+            locator=locator
+        )
+        element.find_elem()
+        return element
+
+    @property
+    def search_location_text(self):
+        locator = Locator(by=By.ID, value='text-input-where')
         element = BaseElement(
             driver=self.driver,
             locator=locator
@@ -105,44 +108,5 @@ class IndeedPage(BasePage):
 
     # @app.task
     def get_location(self, web_element):
-        location = web_element.find_element(By.CLASS_NAME, 'location').text
-        return location
-
-
-##### Celery Task Methods #####
-    @app.task
-    def get_job_cards1(self):
-        locator = Locator(by=By.CLASS_NAME, value='jobsearch-SerpJobCard')
-        elements = BaseElement(
-            self.driver, locator
-        )
-        elements.find_elems()
-        return elements.web_element
-
-    @app.task
-    def get_job_title1(self, web_element):
-        job_title = web_element.find_element(By.CLASS_NAME, 'jobtitle').text
-        return job_title
-
-    @app.task
-    def get_job_post_url1(self, web_element):
-        url = web_element.find_element(
-            By.CLASS_NAME, 'jobtitle').get_attribute('href')
-        if url == None:
-            url = web_element.find_element(
-                By.CLASS_NAME, 'turnstileLink').get_attribute('href')
-        return url
-
-    @app.task
-    def get_company1(self, web_element):
-        try:
-            company = web_element.find_element(By.CLASS_NAME, 'company').text
-            return company
-        except:
-            company = "Unnamed"
-            return company
-
-    @app.task
-    def get_location1(self, web_element):
         location = web_element.find_element(By.CLASS_NAME, 'location').text
         return location
