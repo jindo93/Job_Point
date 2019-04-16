@@ -2,6 +2,7 @@
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 
 class BaseElement(object):
@@ -55,6 +56,14 @@ class BaseElement(object):
     def attribute(self, attr):
         attribute = self.web_element.get_attribute(attr)
         return attribute
+
+    def manual_clear(self):
+        for i in range(30):
+            self.web_element.send_keys(Keys.BACK_SPACE)
+        # self.web_element.send_keys(Keys.CLEAR)
+        # while self.web_element.text:
+        #     self.web_element.send_keys(Keys.BACK_SPACE)
+        return None
 
     @property
     def text(self):
