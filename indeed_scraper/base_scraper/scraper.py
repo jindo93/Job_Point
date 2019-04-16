@@ -16,9 +16,9 @@ graph = Graph(URL, auth=(NEO4J_USR, NEO4J_PW))
 
 def get_driver():
     options = Options()
-    # options.add_argument('--headless')
-    # options.add_argument('--no-sandbox')
-    # options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(1440, 900)
 
@@ -49,7 +49,7 @@ def scrape_jobs(job_title):
             if len(job_details) > 300:
                 input_job_data(graph, job_details)
                 job_details = []
-                break  # TODO Comment out for production mode
+                # break  # TODO Comment out for production mode
         if len(job_details) > 0:
             input_job_data(graph, job_details)
         job_details = []

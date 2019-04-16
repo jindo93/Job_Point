@@ -15,7 +15,7 @@ class BaseElement(object):
         element = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(locator=self.locator)
         )
-        print('element: ', element)
+        #print('element: ', element)
         self.web_element = element
         return None
 
@@ -24,7 +24,7 @@ class BaseElement(object):
             EC.visibility_of_all_elements_located(locator=self.locator)
         )
         self.web_element = elements
-        print('elements: \n', elements)
+        #print('elements: \n', elements)
         return None
 
     def find_next_page(self):
