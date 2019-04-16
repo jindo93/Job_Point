@@ -6,50 +6,62 @@ from selenium.webdriver.chrome.options import Options
 
 from schema import input_job_data
 from indeed_page import IndeedPage
-from utils.auth import NEO4J_USR, NEO4J_PW
+from auth import URL, NEO4J_USR, NEO4J_PW
 
 
-graph = Graph("bolt://localhost:7687", auth=(NEO4J_USR, NEO4J_PW))
+graph = Graph(URL, auth=(NEO4J_USR, NEO4J_PW))
+
+# Internal Function
+
+
+def get_driver():
+    options = Options()
+    # options.add_argument('--headless')
+    # options.add_argument('--no-sandbox')
+    # options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(options=options)
+    driver.set_window_size(1440, 900)
+
+    print('Got driver! \n')
+    return driver
+
+
+def scrape_jobs(job_title):
+    browser = get_driver()
+    try:
+        ip = IndeedPage(driver=browser)
+        ip.go()
+        ip.search_input.input_text(job_title)
+        loc = ip.search_location_text
+        loc.click()
+        loc.manual_clear()
+        ip.search_job_button.click()
+
+        job_details = []
+
+        while ip.next_page_button:
+            job_details.extend(ip.get_job_details(ip.get_job_cards))
+            ip.next_page_button.click_next_page()
+            try:
+                ip.popup.click()
+            except:
+                pass
+            if len(job_details) > 300:
+                input_job_data(graph, job_details)
+                job_details = []
+                break  # TODO Comment out for production mode
+        if len(job_details) > 0:
+            input_job_data(graph, job_details)
+        job_details = []
+        print('All jobs titled <' + job_title + '> have been scraped')
+        browser.quit()
+        return True
+    except:
+        browser.quit()
+        return False
+
 
 if __name__ == '__main__':
-    options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-
-    browser = webdriver.Chrome(options=options)
-    browser.set_window_size(1440, 900)
-
-    job_title = 'data scientist'
-
-    indeed = IndeedPage(driver=browser)
-    indeed.go()
-    indeed.search_input.input_text(job_title)
-    indeed.search_job_button.click()
-
-    job_details = []
-
-    while indeed.next_page_button:
-        # cards = indeed.get_job_cards.delay().get()
-        # job_details.extend(
-        #     [group([indeed.get_job_title.s(e),
-        #             indeed.get_job_post_url.s(e),
-        #             indeed.get_company.s(e),
-        #             indeed.get_location.s(e)] for e in cards)().get()]
-        # )
-        job_details.extend(indeed.get_job_details(indeed.get_job_cards))
-        indeed.next_page_button.click_next_page()
-        next_page = indeed.next_page_button
-
-        try:
-            indeed.popup.click()
-        except:
-            pass
-        if len(job_details) > 100:
-            input_job_data(graph, job_details)
-            job_details = []
-            break
-    input_job_data(graph, job_details)
-    job_details = []
-    print('All jobs titled <' + job_title + '> have been scraped')
-    browser.close()
+    job_titles = ['software engineer', 'data engineer']
+    for job in job_titles:
+        scrape_jobs(job)
