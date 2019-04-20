@@ -5,7 +5,8 @@ from py2neo import Node, Relationship
 
 def input_job_data(graph, job_details):
     for job_detail in job_details:
-        job = Node("Job", name=job_detail[0], post_url=job_detail[1])
+        job = Node(
+            "Job", name=job_detail[0], post_url=job_detail[1], summary=job_detail[4])
         company = Node("Company", name=job_detail[2])
         location = Node("Location", name=job_detail[3])
 
