@@ -3,6 +3,9 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+import os
+
+cwd = os.getcwd()
 
 
 class BaseElement(object):
@@ -12,57 +15,91 @@ class BaseElement(object):
         self.web_element = None
 
     def find_elem(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located(locator=self.locator)
-        )
-        #print('element: ', element)
-        self.web_element = element
-        return None
+        try:
+            element = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(locator=self.locator)
+            )
+            self.web_element = element
+            return None
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Element Not Found!: {locator}'.format(
+                    locator=self.locator))
+            f.close()
 
     def find_elems(self):
-        elements = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_all_elements_located(locator=self.locator)
-        )
-        self.web_element = elements
-        #print('elements: \n', elements)
-        return None
+        try:
+            elements = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_all_elements_located(locator=self.locator)
+            )
+            self.web_element = elements
+            return None
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Elements Not Found!: {locator}'.format(
+                    locator=self.locator))
+            f.close()
 
     def find_next_page(self):
-        elements = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_all_elements_located(locator=self.locator)
-        )
-        element = elements[-1]
-        self.web_element = element
-        return None
+        try:
+            elements = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_all_elements_located(locator=self.locator)
+            )
+            element = elements[-1]
+            self.web_element = element
+            return None
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Next Page Not Found!: {locator}'.format(
+                    locator=self.locator))
+            f.close()
 
     def input_text(self, txt):
-        self.web_element.send_keys(txt)
-        return None
+        try:
+            self.web_element.send_keys(txt)
+            return None
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Unable to Send Input Text!')
+            f.close()
 
     def click(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(locator=self.locator)
-        )
-        element.click()
-        return None
+        try:
+            element = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(locator=self.locator)
+            )
+            element.click()
+            return None
+        except:
+            with open(cwd+'/log.txt') as f:
+                f.write('Unable to Click!: {locator}'.format(
+                    locator=self.locator))
+            f.close()
 
     def click_next_page(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(locator=self.locator)
-        )
-        self.web_element.click()
-        return None
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(locator=self.locator)
+            )
+            self.web_element.click()
+            return None
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Next Page Not Found!: {locator}'.format(
+                    locator=self.locator))
+            f.close()
 
     def attribute(self, attr):
-        attribute = self.web_element.get_attribute(attr)
-        return attribute
+        try:
+            attribute = self.web_element.get_attribute(attr)
+            return attribute
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Attribute Not Found!: {attr}'.format(attr=attr))
 
     def manual_clear(self):
         for i in range(30):
             self.web_element.send_keys(Keys.BACK_SPACE)
-        # self.web_element.send_keys(Keys.CLEAR)
-        # while self.web_element.text:
-        #     self.web_element.send_keys(Keys.BACK_SPACE)
         return None
 
     @property
