@@ -85,7 +85,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Next Page Not Found!: {locator} \n'.format(
+                f.write('Next Page Not Clicked!: {locator} \n'.format(
                     locator=self.locator))
             f.close()
 
@@ -106,3 +106,27 @@ class BaseElement(object):
     def text(self):
         text = self.web_element.text
         return text
+
+    def check_popup(self):
+        try:
+            element = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(locator=self.locator)
+            )
+            if element:
+                return True
+        except:
+            return False
+
+    def check_next_page(self):
+        try:
+            elements = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_all_elements_located(locator=self.locator)
+            )
+            element = elements[-1]
+            if element:
+                return True
+        except:
+            with open(cwd+'/log.txt', 'a') as f:
+                f.write('Next Page Not Found!: {locator} \n'.format(
+                    locator=self.locator))
+            f.close()
