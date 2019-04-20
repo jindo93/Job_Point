@@ -58,6 +58,16 @@ class IndeedPage(BasePage):
         return element
 
     @property
+    def check_next_page(self):
+        locator = Locator(
+            by=By.XPATH, value="//div[@class='pagination']/a"
+        )
+        element = BaseElement(
+            self.driver, locator
+        )
+        return element.check_next_page()
+
+    @property
     def popup(self):
         locator = Locator(
             by=By.XPATH, value="//div[@id='popover-x']/a")
@@ -65,7 +75,12 @@ class IndeedPage(BasePage):
         element.find_elem()
         return element
 
-    # @app.task
+    @property
+    def check_popup(self):
+        locator = Locator(by=By.XPATH, value="//div[@id='popover-x']/a")
+        element = BaseElement(self.driver, locator)
+        return element.check_popup()
+
     @property
     def get_job_cards(self):
         locator = Locator(by=By.CLASS_NAME, value='jobsearch-SerpJobCard')
