@@ -23,7 +23,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Element Not Found!: {locator}'.format(
+                f.write('Element Not Found!: {locator} \n'.format(
                     locator=self.locator))
             f.close()
 
@@ -36,7 +36,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Elements Not Found!: {locator}'.format(
+                f.write('Elements Not Found!: {locator} \n'.format(
                     locator=self.locator))
             f.close()
 
@@ -50,7 +50,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Next Page Not Found!: {locator}'.format(
+                f.write('Next Page Not Found!: {locator} \n'.format(
                     locator=self.locator))
             f.close()
 
@@ -60,7 +60,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Unable to Send Input Text!')
+                f.write('Unable to Send Input Text! \n')
             f.close()
 
     def click(self):
@@ -72,7 +72,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt') as f:
-                f.write('Unable to Click!: {locator}'.format(
+                f.write('Unable to Click!: {locator} \n'.format(
                     locator=self.locator))
             f.close()
 
@@ -85,7 +85,7 @@ class BaseElement(object):
             return None
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Next Page Not Found!: {locator}'.format(
+                f.write('Next Page Not Found!: {locator} \n'.format(
                     locator=self.locator))
             f.close()
 
@@ -95,7 +95,7 @@ class BaseElement(object):
             return attribute
         except:
             with open(cwd+'/log.txt', 'a') as f:
-                f.write('Attribute Not Found!: {attr}'.format(attr=attr))
+                f.write('Attribute Not Found!: {attr} \n'.format(attr=attr))
 
     def manual_clear(self):
         for i in range(30):
