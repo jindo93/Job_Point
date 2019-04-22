@@ -2,6 +2,12 @@
 
 celery -A proj worker --loglevel=info
 
+celery -A proj worker1 --loglevel=info --concurrency=1
+
+# Start flower
+
+celery -A proj flower --loglevel=info address=0.0.0.0
+
 # Shutdown running celery process
 
 celery -A proj control shutdown
