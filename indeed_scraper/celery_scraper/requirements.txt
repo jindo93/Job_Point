@@ -1,0 +1,4 @@
+selenium
+celery
+neo4j
+virtualenv
