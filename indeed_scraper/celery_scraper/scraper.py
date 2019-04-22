@@ -5,7 +5,7 @@ from celery import Celery
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from schema import input_job_data
+#from schema import input_job_data
 from indeed_page import IndeedPage
 from auth import BROKER
 import logger as Log
@@ -59,10 +59,10 @@ def scrape_jobs(job_title, state):
             if ip.check_popup:
                 ip.popup.click()
 
-            if len(job_details) > 30:
+            if len(job_details) > 1000:
                 save_job_data(job_title, state, job_details)
                 job_details = []
-                break  # TODO Comment out for production mode
+                # break  # TODO Comment out for production mode
         if len(job_details) > 0:
             save_job_data(job_title, state, job_details)
             job_details = []
