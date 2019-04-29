@@ -1,0 +1,34 @@
+Error in File Import for:  AZ.csv
+Error in File Import for:  WA.csv
+Error in File Import for:  NC.csv
+Error in File Import for:  NV.csv
+Error in File Import for:  NE.csv
+Error in File Import for:  FL.csv
+Error in File Import for:  IL.csv
+Error in File Import for:  SD.csv
+Error in File Import for:  LA.csv
+Error in File Import for:  MA.csv
+Error in File Import for:  NM.csv
+Error in File Import for:  WY.csv
+Error in File Import for:  OH.csv
+Error in File Import for:  NY.csv
+Error in File Import for:  OK.csv
+Error in File Import for:  MT.csv
+
+ create mode 100644 datafiles/AK.csv
+ create mode 100644 datafiles/CA.csv
+ create mode 100644 datafiles/IA.csv
+ create mode 100644 datafiles/ID.csv
+ create mode 100644 datafiles/MD.csv
+ create mode 100644 datafiles/ME.csv
+ create mode 100644 datafiles/MI.csv
+ create mode 100644 datafiles/MO.csv
+ create mode 100644 datafiles/ND.csv
+ create mode 100644 datafiles/NH.csv
+ create mode 100644 datafiles/OR.csv
+ create mode 100644 datafiles/SC.csv
+ create mode 100644 datafiles/TX.csv
+ create mode 100644 datafiles/UT.csv
+ create mode 100644 datafiles/WI.csv
+ create mode 100644 logfiles/node2-log.txt
+ create mode 100644 logfiles/node3-log.txt
